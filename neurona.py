@@ -4,6 +4,7 @@ from sys import argv
 from numpy import *
 from numpy.random import *
 import random
+import matplotlib.pyplot as plt
 import sys
 
 alpha = .3
@@ -64,6 +65,7 @@ class Neurona:
    
 def main():
   global DIM, N_MUESTRAS
+  
   generar_muestras(5, 2, N_MUESTRAS)
   m, c = leer_muestra("muestra.txt")
   a = Neurona(DIM, "a")
@@ -73,6 +75,8 @@ def main():
   neuronas.append(b)
   bien = 0
   mal = 0
+  x1 = []
+  y1 = []
   for i in range(len(m)):
     generado = ""
     deseado = c[i]
@@ -80,6 +84,8 @@ def main():
     for neurona in neuronas:
       generado += neurona.procesar(muestra)
     print "%s %s, %s"%(deseado, neuronas[0].res, neuronas[1].res)
+    x1.append(neuronas[0].res)
+    y1.append(neuronas[1].res)
     #print "%s == %s"%(deseado, generado)
     if generado == deseado:
       bien += 1
@@ -90,8 +96,12 @@ def main():
           y = bool(int(generado[j]))
           t = bool(int(deseado[j]))
 	  neuronas[j].entrenar(y, t, muestra)
+  #plt.ion()
+  #plt.hold(False)
+  #plt.plot(x1, y1)
+  #plt.show()
   print "Bien: %s"%bien
-  print "Mal: %s"%mal
+  #print "Mal: %s"%mal
       
     
 main()

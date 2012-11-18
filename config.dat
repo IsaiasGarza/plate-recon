@@ -1,0 +1,9 @@
+#Ne = Neuronas en capa de entrada
+#No = Neuronas en capa oculta
+#Ns = Neuronas en capa de salida
+#TA = Tasa de Aprendizaje
+Ne 2
+No 4
+Ns 1
+TA 0.35
+Iter 10000

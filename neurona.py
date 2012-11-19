@@ -1,107 +1,95 @@
-#!/usr/bin/python
-import random
-from sys import argv
+#!/usr/bin/python 
+                                                                                                                                            
+from random import *
 from numpy import *
 from numpy.random import *
-import random
-import matplotlib.pyplot as plt
-import sys
-
-alpha = .3
-DIM = 1
-N_MUESTRAS = 500
-
-def generar_muestras(a, b, n):
-  f = open("muestra.txt","w") 
-  for i in range(n):
-    muestra = random.uniform(0, (a+b))
-    if muestra < b:
-      f.write("%s %s\n"%(muestra, "00"))
-    elif (muestra > b) and (muestra < a):
-      f.write("%s %s\n"%(muestra, "01"))
-    elif muestra >a:
-      f.write("%s %s\n"%(muestra, "11"))
-  f.close()
-
-def leer_muestra(filename):
-  f = open(filename, "r")
-  m = []	
-  c = []
-  for line in f.readlines():
-      tmp_m, tmp_c = line.split(" ") 
-      m.append(float(tmp_m))
-      c.append(tmp_c.replace("\n", ""))
-  f.close()
-  return array(m), array(c)
-
-def generar_pesos(n):
-  w = uniform(low=-1, high=1, size=(1,n+1))
-  return w
+from sys import argv
 
 
-class Neurona:
-  def __init__(self, n, ID):
-    self.x = None
-    self.w = generar_pesos(n)
-    self.n = n
-    self.res = None
-    self.ID = ID
 
-  def procesar(self, x):
-    self.x = array([])
-    self.x = append(self.x, x)    
-    self.x = append(self.x, -1)
-    a = self.w * self.x
-    self.res = a.sum()
-    if self.res > 0:
-      return "1"
-    else:
-      return "0"
- 
-  def entrenar(self, y, t, muestra):
-    global alpha
-    for i in range(len(self.w)):
-      self.w[i] += alpha*(t - y)*muestra
-   
-def main():
-  global DIM, N_MUESTRAS
-  
-  generar_muestras(5, 2, N_MUESTRAS)
-  m, c = leer_muestra("muestra.txt")
-  a = Neurona(DIM, "a")
-  b = Neurona(DIM, "b")
-  neuronas = []
-  neuronas.append(a)
-  neuronas.append(b)
-  bien = 0
-  mal = 0
-  x1 = []
-  y1 = []
-  for i in range(len(m)):
-    generado = ""
-    deseado = c[i]
-    muestra = m[i]
-    for neurona in neuronas:
-      generado += neurona.procesar(muestra)
-    print "%s %s, %s"%(deseado, neuronas[0].res, neuronas[1].res)
-    x1.append(neuronas[0].res)
-    y1.append(neuronas[1].res)
-    #print "%s == %s"%(deseado, generado)
-    if generado == deseado:
-      bien += 1
-    else:
-      mal += 1
-      for j in range(len(generado)):
- 	if generado[j] != deseado[j]:
-          y = bool(int(generado[j]))
-          t = bool(int(deseado[j]))
-	  neuronas[j].entrenar(y, t, muestra)
-  #plt.ion()
-  #plt.hold(False)
-  #plt.plot(x1, y1)
-  #plt.show()
-  print "Bien: %s"%bien
-  #print "Mal: %s"%mal
-      
-    
-main()
+alpha = 0.1
+
+umbral = 0.5
+
+
+class Capa(object):
+	def __init__(self, n, name):
+		self.name = name
+		self.neuronas = self.agregar_neurona(n)
+	
+	def agregar_neurona(self, n):
+		for i in range(n):
+			self.neuronas.append(Neurona(1))
+	def procesar(self, x):
+		x = append(x, -1)
+		w = array()
+		for neurona in neuronas:
+			w = append(neurona.w)
+		w = append(umbral)
+		act = w*x
+		act = act.sum()
+		if act > 0:
+			return 1
+		else:
+			return 0
+		
+
+class Neurona(object):
+
+	def __init__(self, n):
+    		self.w = uniform(low=0, high=1, size=(1, n))
+		self.w = append(self.w, umbral)
+	def activacion(self, x):
+		a = x
+		x = append(x, -1)
+		act = self.w * x
+		act = act.sum()
+		if act > 0:
+			return "1"
+		else:
+			return "0"
+	def aprendizaje(self, y, t, x):
+		for i in range(self.w.size-1):
+      			self.w[i] += alpha*(t - y)*x
+
+
+
+if __name__ == "__main__":
+	ITER = int(argv[1])
+	n = int(argv[2])
+
+	capa_oculta = []
+	for i in range(n):
+		capa_oculta.append(Neurona(1))
+	bien = 0
+	mal = 0
+
+	for i in range(ITER):
+		y = ""
+		t = ""
+		muestra = []
+		for j in range(len(capa_oculta)):
+		 	muestra.append(uniform(0, 1))
+	
+		for x in muestra:
+			if x > 0.5:
+				t += "1"
+			else:
+				t += "0"
+
+		for j in range(len(capa_oculta)):
+			y += capa_oculta[j].activacion(muestra[j])
+	
+		print "Salida de la Neurona: %s Salida Correcta: %s"%(y, t)
+
+		if y == t:
+			bien += 1
+		else:
+			mal += 1
+			for j in range(len(capa_oculta)):
+				if y[j] != t[j]:
+					capa_oculta[j].aprendizaje(int(y[j]), int(t[j]), muestra[j])
+
+	print "Bien ",bien
+	print "Mal ",mal
+

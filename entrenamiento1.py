@@ -16,6 +16,12 @@ en adelante.
 import Tkinter as tk
 import ImageTk, Image
 
+debug = False
+for i in range(len(argv)):
+    if argv[i]=="-b":	  	
+        print "*--- Modo Debug ---*" 	
+        debug = True
+
 root = tk.Tk()
 img = ImageTk.PhotoImage(Image.open("imagenes/1.jpg"))
 panel = tk.Label(root, image = img)
@@ -44,11 +50,14 @@ def click(event):
     new = ImageTk.PhotoImage(Image.open("imagenes/%s.jpg"%i))
     panel.configure(image = new)
     panel.image = new
-  print event.x, event.y
+  if debug:
+    print event.x, event.y
 
 def key(event):
   global i, panel, count, x1, x2, y1, y2, f
   if count >= 2:
+    if debug:
+          print i, x1, y1, x2, y2
     f.write("%s %s %s %s %s\n"%(i, x1, y1, x2, y2))
     i+=1
     new = ImageTk.PhotoImage(Image.open("imagenes/%s.jpg"%i))

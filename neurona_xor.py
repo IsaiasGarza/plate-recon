@@ -13,6 +13,12 @@ import numpy
 from sys import argv
 TASA_APRENDIZAJE = None
 
+debug = False
+for i in range(len(argv)):
+    if argv[i]=="-b":	  	
+        print "*--- Modo Debug ---*" 	
+        debug = True
+
 Tabla_Verdad = [([0, 0], 0), 
 		([0, 1], 1), 
 		([1, 0], 1), 
@@ -53,8 +59,8 @@ class RedNeuronal(object):
 	self.salida.activacion = numpy.dot(self.salida.w, self.oculta.output)
 	self.salida.output = numpy.tanh(self.salida.activacion)
 	self.salidas.append(self.salida.output[0])
-
-	print self.salida.output[0]
+    if debug:
+        print self.salida.output[0]
 	if self.salida.output[0] > 0.5:
 	    return 1
 	else:
@@ -98,9 +104,16 @@ def main():
           red.entrenar(t)
 	else:
 	  bien += 1
-	print "%s Salida de la Red: %s   Salida Correcta: %s"%(i+1, y, t)
-    print "Totales"
-    print "Correctos: %s"%(bien)
-    print "Incorrectos: %s"%(mal)
+    if debug:
+        print "%s Salida de la Red: %s   Salida Correcta: %s"%(i+1, y, t)
+    
+    if debug:
+        print "Totales"
+    
+    if debug:
+        print "Correctos: %s"%(bien)
+    
+    if debug:
+        print "Incorrectos: %s"%(mal)
 
 main()

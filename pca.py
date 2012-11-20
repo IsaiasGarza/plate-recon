@@ -11,6 +11,7 @@ import mdp
 import numpy as np
 import random
 import Image
+from sys import argv
 
 debug = False
 for i in range(len(argv)):

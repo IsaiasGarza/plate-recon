@@ -1,5 +1,12 @@
 from numpy import *
 from random import *
+from sys import argv
+
+debug = False
+for i in range(len(argv)):
+    if argv[i]=="-b":	  	
+        print "*--- Modo Debug ---*" 	
+        debug = True
 
 class pruebared(object):
 	def __init__(self):
@@ -41,7 +48,7 @@ class pruebared(object):
 			for j, valor2 in enumerate(valor1):
 				vectorEntr[i][j] = valor2
 
-		print "\nVector de Entrada ----> \n" + str(vectorEntr)
+		if debug: print "\nVector de Entrada ----> \n" + str(vectorEntr)
 		return (vectorEntr, largo, dimension)
 
 	def pesos(self, largo, dimension):
@@ -50,7 +57,7 @@ class pruebared(object):
 			for j in range(dimension):
 				vectorPeso[i][j] = uniform(-1, 1)
 
-		print "\nVector de Pesos ----> \n"+ str(vectorPeso)
+		if debug: print "\nVector de Pesos ----> \n"+ str(vectorPeso)
 		return vectorPeso
 
 	def activacion(self, largo, vectorEntr, vectorPeso):
@@ -63,7 +70,7 @@ def main():
 	(vectorEntr, largo, dimension) = (neuro.vectorEntr, neuro.largo, neuro.dimension)
 
 	for i in vectorEntr:
-		print "Capa = ", i
+		if debug: print "Capa = ", i
 		neuro.i = i
 		neuro.capa = neuro.activacion(neuro.largo, neuro.i, neuro.vectorPeso)
 		neuro.capaSali = neuro.activacion(neuro.largo, neuro.capa, neuro.vectorSalida)

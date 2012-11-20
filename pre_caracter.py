@@ -14,6 +14,12 @@ import ImageTk, Image
 import Tkinter as tk
 import math
 
+debug = False
+for i in range(len(argv)):
+    if argv[i]=="-b":	  	
+        print "*--- Modo Debug ---*" 	
+        debug = True
+
 element = cv2.getStructuringElement(cv2.MORPH_CROSS,(9,8))
 input_img = argv[1]
 img = cv2.imread(input_img)
@@ -61,8 +67,7 @@ def verificar_pixeles(old, y):
 
 def escala():
   old = Image.open('output.png')
-  print old.mode
-  #print old.mode
+  if debug: print old.mode
   w, h = old.size
   root = tk.Tk()
   pix = old.load()
@@ -87,17 +92,17 @@ def escala():
 	break
      
   box = (x1, y2, x2, y1)      
-  print box
+  if debug: print box
   old = old.crop(box)
   old.save('output.png', 'PNG')
   return box
 
 def close(x, w, x1, x2):
   if x1 in range (x-5, x+5):
-    print 'yes'
+    if debug: print 'yes'
     return True
   elif x2 in range (w-5, w+5):
-    print 'yes1'
+    if debug: print 'yes1'
     return True
   else:
     return False
@@ -121,7 +126,7 @@ def main():
     w = w + x
     h = h + y
     if (h-y) > 60:
-      print x, y, w, h
+      if debug: print x, y, w, h
       rects.append([x, y, w, h])
   i = 0
 

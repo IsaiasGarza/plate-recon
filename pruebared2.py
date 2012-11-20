@@ -12,7 +12,7 @@ class pruebared2(object):
 	def __init__(self):
 		(self.vectorEntr, self.dimension) = self.entradas() #Las variables vectorEntr y dimension se obtienen del metodo entradas
 		self.vectorPeso = self.pesos(self.dimension, self.dimension) #Las variable vectorPeso se obtienen del metodo pesos
-		self.vectorSalida = self.pesos(self.dimension, self.dimension - 2) #Las variable vectorSalida se obtienen del metodo pesos diciendo que la salida debe ser de tamano - 2
+		self.vectorSalida = self.pesos(self.dimension - 2, self.dimension) #Las variable vectorSalida se obtienen del metodo pesos diciendo que la salida debe ser de tamano - 2
 
 	def entradas(self): #Funcion que se encarga de generar las entradas
 		f = open('datos.puddi','r')
@@ -84,7 +84,7 @@ def main():
 		if debug: print "\nCapa "+str(conta)+" = "+str(i)
 		neuro.i = i
 		neuro.capa = neuro.activacion(neuro.dimension, neuro.dimension, neuro.i, neuro.vectorPeso) #Se crea la capa salida del metodo activacion de la clase pruebared2
-		neuro.capaSali = neuro.activacion(neuro.dimension, neuro.dimension-2, neuro.capa, neuro.vectorSalida) #Se crea la capa salida del metodo activacion de la clase pruebared2,  se pone un -2 ya que quiero de salida lo que vale la dimension -2
+		neuro.capaSali = neuro.activacion(neuro.dimension - 2, neuro.dimension, neuro.capa, neuro.vectorSalida) #Se crea la capa salida del metodo activacion de la clase pruebared2,  se pone un -2 ya que quiero de salida lo que vale la dimension -2
 
 	print "\nValor de la capa ---> \n"+str(neuro.capa)+'\n' #Imprimimos lo que vale la ultima capa
 	print "\nValor de la salida ---> \n"+str(neuro.capaSali) #Imprimimos lo que vale la capa de salida

@@ -2,23 +2,23 @@ import math
 
 def seleccion(x,y,a,t,s):
 	k = 0
-	if s = 0:
+	if s == 0:
 		k = linear(x,y,t,c)
-	if s = 1:
+	if s == 1:
 		k = polinomial(a,x,y,t,c)
-	if s = 2:
+	if s == 2:
 		k = hyp_tan(a, x,y,t,c)
-	if s = 3:
+	if s == 3:
 		k = rat_quad(x,y,c)
-	if s = 4:
+	if s == 4:
 		k = multiquad(x,y,c)
-	if s = 5:
+	if s == 5:
 		k = inv_multiquad(x,y,c)
-	if s = 6:
+	if s == 6:
 		k = power_kernel(x,y,c)
-	if s = 7:
+	if s == 7:
 		k = log_kernel(x,y,c)
-	if s = 8:
+	if s == 8:
 		k = t_student(x,y,c)
 	return k
 

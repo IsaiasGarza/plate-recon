@@ -1,5 +1,8 @@
 import math
 
+d = 2
+c = .04
+
 def seleccion(x,y,a,t,s):
 	k = 0
 	if s == 0:
@@ -23,37 +26,46 @@ def seleccion(x,y,a,t,s):
 	return k
 
 def linear(x,y,T,c):
-     k = ((x**T)*y)+c
-     return k
- 
+    print "Linear Kernel"
+    k = ((x**T)*y)+c
+    return k
+
 def polinomial(a,x,y,T,c):
-     k = ((a*x**T)*y)+c
-     return k
- 
+    print "Polinomial Kernel"
+    k = ((a*x**T)*y+c)**d
+    return k
+
 def hyp_tan(a,x,y,T,c):
-     k = math.tanh(((a*x**T)*y)+c)
-     return k
+    print "Hyperbolic Tangent Kernel"
+    k = math.tanh(((a*x**T)*y)+c)
+    return k
 
 def rat_quad(x,y,c):
-     k = 1 - (math.fabs(x-y)**2/(math.fabs(x-y)**2)+c)
-     return k
- 
+    print "Rational Quadratic Kernel"
+    k = 1 - (math.fabs(x-y)**2/(math.fabs(x-y)**2)+c)
+    return k
+
 def multiquad(x,y,c):
-     k = math.sqrt((math.fabs(x+y)**2)+c**2)
-     return k
- 
+    print "Multiquadratic Kernel"
+    k = math.sqrt((math.fabs(x+y)**2)+c**2)
+    return k
+
 def inv_multiquad(x,y,c):
-     k = 1/(math.sqrt((math.fabs(x+y)**2)+c**2))
-     return k
- 
+    print "inverse Multiquadratic Kernel"
+    k = 1/(math.sqrt((math.fabs(x+y)**2)+c**2))
+    return k
+
 def power_kernel(x,y,d):
-     k = -((math.fabs(x+y)**d)+1)
-     return k
+    print "Power Kernel"
+    k = -((math.fabs(x+y)**d)+1)
+    return k
 
 def log_kernel(x,y,d):
-     k = -(math.log(math.fabs(x-y)**d) +1 )
-     return k
+    print "Log Kernel"
+    k = -(math.log(math.fabs(x-y)**d) +1 )
+    return k
 
 def t_student(x,y,d):
-     k = 1/(1+(math.fabs(x+y)**2))
-     return k
+    print "Generalized T-Student Kernel"
+    k = 1/(1+(math.fabs(x+y)**2))
+    return k

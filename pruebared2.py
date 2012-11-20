@@ -1,5 +1,12 @@
 from numpy import *
 from random import *
+from sys import argv
+
+debug = False
+for i in range(len(argv)):
+    if argv[i]=="-b":	  	
+        print "*--- Modo Debug ---*" 	
+        debug = True
 
 class pruebared2(object):
 	def __init__(self):
@@ -43,7 +50,7 @@ class pruebared2(object):
 				vectorEntr[i][j] = valor2 #Se guarda en el vector[i][j] lo que vale valor2
 		#http://stackoverflow.com/questions/10777271/python-using-enumerate-inside-list-comprehension
 
-		#print "\nVector de Entrada ----> \n" + str(vectorEntr)
+		#if debug: print "\nVector de Entrada ----> \n" + str(vectorEntr)
 		return (vectorEntr, dimension) #Se regrese el vector de entrada y dimension
 
 	def pesos(self, largo, dimension): #Funcion que crea el vector de Pesos
@@ -52,16 +59,16 @@ class pruebared2(object):
 			for j in range(dimension):
 				vectorPeso[i][j] = uniform(-1, 1) #Creamos un valor uniforme y los agregamos al vector de peso
 
-		#print "\nVector de Pesos ----> \n"+ str(vectorPeso)
+		#if debug: print "\nVector de Pesos ----> \n"+ str(vectorPeso)
 		return vectorPeso #Regresa el vector de pesos
 
 	def activacion(self, largo, dimension, vectorEntr, vectorPeso):
-		#print "\n"+str(vectorEntr)
-		print "\n"+str(vectorPeso)
+		#if debug: print "\n"+str(vectorEntr)
+		if debug: print "\n"+str(vectorPeso)
 		valor = zeros(largo) #Creamos un vector de ceros del tamano n
 		for i in range(largo):
 			valor[i] = sum(vectorEntr[i] * vectorPeso[i]) #Se agrega la suma de la multiplicacion del vector de entradas y el de pesos al vector[i]
-			print 'valor '+str(i)+' --> '+str(valor[i]) #Para saber lo que vale la variable valor[i]
+			if debug: print 'valor '+str(i)+' --> '+str(valor[i]) #Para saber lo que vale la variable valor[i]
 		return valor
 
 def main():
@@ -69,12 +76,12 @@ def main():
 
 	#(vectorEntr, largo, dimension) = (neuro.vectorEntr, neuro.largo, neuro.dimension)
 	(vectorEntr, dimension) = (neuro.vectorEntr, neuro.dimension) #Se recibe en las variables vectorEntr y dimension lo que vale las variables vectorEntr y dimension de la clase
-	#print "vectorEntradas -->\n"+str(vectorEntr)
+	#if debug: print "vectorEntradas -->\n"+str(vectorEntr)
 
 	conta = 0
 	for i in vectorEntr:
 		conta = conta + 1
-		print "\nCapa "+str(conta)+" = "+str(i)
+		if debug: print "\nCapa "+str(conta)+" = "+str(i)
 		neuro.i = i
 		neuro.capa = neuro.activacion(neuro.dimension, neuro.dimension, neuro.i, neuro.vectorPeso) #Se crea la capa salida del metodo activacion de la clase pruebared2
 		neuro.capaSali = neuro.activacion(neuro.dimension, neuro.dimension-2, neuro.capa, neuro.vectorSalida) #Se crea la capa salida del metodo activacion de la clase pruebared2,  se pone un -2 ya que quiero de salida lo que vale la dimension -2

@@ -15,6 +15,11 @@ import ImageTk, Image
 import math
 from sys import argv
  
+debug = False
+for i in range(len(argv)):
+    if argv[i]=="-b":	  	
+        print "*--- Modo Debug ---*" 	
+        debug = True
 
 min_disc = 10
 max_disc = 60
@@ -29,7 +34,8 @@ def calcular_area(x1, y1, x2, y2):
   area = 0
   base = distancia(x1, y1, x2, y1)
   altura = distancia(x1, y1, x1, y2)
-  #print base*altura
+  if debug:
+      print base*altura
   return base*altura
 
 def overlap_area(roi, x11, y11, x12, y12):
@@ -50,13 +56,15 @@ class ROI(object):
     self.ID = i
     self.x1, self.y1, self.x2, self.y2 = self.get_coords(i)
     self.area = calcular_area(self.x1, self.y1, self.x2, self.y2)
-    print self.x1, self.y1, self.x2, self.y2
+    if debug:
+        print self.x1, self.y1, self.x2, self.y2
 
   def get_coords(self, n):
     f = open("muestra.roi", "r")
     for line in f.readlines():
       tmp, x1, y1, x2, y2 = line.split(" ")
-      print tmp, n
+    if debug:
+        print tmp, n
       if n in tmp:
         return int(x1), int(y1), int(x2), int(y2)
     return -1, -1, -1, -1
@@ -89,7 +97,8 @@ for i in range(width/vel):
     #print area
     if ov_area > 0:
       disc = (ov_area/rect_area)*100
-      print disc
+    if debug:
+        print disc
       if disc < min_disc:
         rectangle = canvas.create_rectangle(x1, y1, x2, y2, outline = "red", width = 2)
         tmp.append(-1)

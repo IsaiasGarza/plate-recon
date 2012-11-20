@@ -8,7 +8,11 @@ import sys
 
 alpha = 0.3
 umbral = 0.6
-DEBUG = True
+debug = False
+for i in range(len(argv)):
+    if argv[i]=="-b":	  	
+        print "*--- Modo Debug ---*" 	
+        debug = True
 
 
 class Neurona(object):
@@ -27,7 +31,7 @@ class Neurona(object):
 		else:
 			return "0"
 	def aprendizaje(self, y, t, x):
-		#print self.w
+		if debug: print self.w
 		for i in range(self.w.size-1):
       			self.w[i] += alpha*(t - y)*x
 
@@ -68,16 +72,16 @@ if __name__ == "__main__":
 			y += capa_oculta[j].activacion(x[j])
 
 		if y == t:
-			#if DEBUG: print "y = %s t= %s   :)"%(y, t)
+			if debug: print "y = %s t= %s   :)"%(y, t)
 			bien += 1
 		else:
-			#if DEBUG: print "y = %s t= %s   :C"%(y, t)
+			if debug: print "y = %s t= %s   :C"%(y, t)
 			mal += 1
 			for j in range(len(capa_oculta)):
 				if y[j] != t[j]:
 					capa_oculta[j].aprendizaje(int(y[j]), int(t[j]), x[j])
 
-	if DEBUG: print "Bien ",bien
-	if DEBUG: print "Mal ",mal
+	if debug: print "Bien ",bien
+	if debug: print "Mal ",mal
         
 

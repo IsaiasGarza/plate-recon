@@ -14,7 +14,17 @@ import ImageTk, Image
 import Tkinter as tk
 import math
 
+<<<<<<< HEAD
 element = cv2.getStructuringElement(cv2.MORPH_CROSS,(7,5))
+=======
+debug = False
+for i in range(len(argv)):
+    if argv[i]=="-b":	  	
+        print "*--- Modo Debug ---*" 	
+        debug = True
+
+element = cv2.getStructuringElement(cv2.MORPH_CROSS,(9,8))
+>>>>>>> c9f648a1cf2de74b80c540778477f0934d6e0958
 input_img = argv[1]
 img = cv2.imread(input_img)
 
@@ -62,8 +72,12 @@ def verificar_pixeles(old, y):
 
 def cortar_imagen():
   old = Image.open('output.png')
+<<<<<<< HEAD
   #print old.mode
   ##print old.mode
+=======
+  if debug: print old.mode
+>>>>>>> c9f648a1cf2de74b80c540778477f0934d6e0958
   w, h = old.size
   root = tk.Tk()
   pix = old.load()
@@ -94,7 +108,11 @@ def cortar_imagen():
 	break
      
   box = (x1, y2, x2, y1)      
+<<<<<<< HEAD
   #print box
+=======
+  if debug: print box
+>>>>>>> c9f648a1cf2de74b80c540778477f0934d6e0958
   old = old.crop(box)
   w, h = old.size
   #old = old.resize((w, 70), Image.NEAREST)
@@ -103,10 +121,17 @@ def cortar_imagen():
 
 def close(x, w, x1, x2):
   if x1 in range (x-5, x+5):
+<<<<<<< HEAD
     #print 'yes'
     return True
   elif x2 in range (w-5, w+5):
     #print 'yes1'
+=======
+    if debug: print 'yes'
+    return True
+  elif x2 in range (w-5, w+5):
+    if debug: print 'yes1'
+>>>>>>> c9f648a1cf2de74b80c540778477f0934d6e0958
     return True
   else:
     return False
@@ -131,7 +156,11 @@ def main():
     h = h + y
     #print h-y
     if (h-y) > 60:
+<<<<<<< HEAD
       ##print x, y, w, h
+=======
+      if debug: print x, y, w, h
+>>>>>>> c9f648a1cf2de74b80c540778477f0934d6e0958
       rects.append([x, y, w, h])
   i = 0
   rects.sort()

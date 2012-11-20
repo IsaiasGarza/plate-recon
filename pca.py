@@ -11,6 +11,13 @@ import mdp
 import numpy as np
 import random
 import Image
+from sys import argv
+
+debug = False
+for i in range(len(argv)):
+    if argv[i]=="-b":	  	
+        print "*--- Modo Debug ---*" 	
+        debug = True
 
 f = open('muestras.dat', 'w')
 abec = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -42,4 +49,4 @@ for k in range(len(correcto)):
 	for value in y:
 	  f.write("%s "%(str(value))) 
 	f.write("\n")
-	#print "Dato para la imagen %s: %s\n"%(k, y)
+	if debug: print "Dato para la imagen %s: %s\n"%(k, y)

@@ -88,6 +88,15 @@ def main():
 
 	print "\nValor de la capa ---> \n"+str(neuro.capa)+'\n' #Imprimimos lo que vale la ultima capa
 	print "\nValor de la salida ---> \n"+str(neuro.capaSali) #Imprimimos lo que vale la capa de salida
+	
+	vecs = list()
+	for i in neuro.capaSali:
+		if i > 0:
+			vecs.append(1)
+		else:
+			vecs.append(0)
+
+	print 'Salida = '+str(vecs)
 	#vectorPeso = neuro.activacion(largo, dimension, vectorEntr, nuevo.vectorPeso)
 	#vectorSalida = neuro.activacion(largo, dimension - 1, vectorEntr, nuevo.vectorPeso)
 
